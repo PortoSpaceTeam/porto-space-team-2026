@@ -21,7 +21,7 @@ const db = await getClient();
  */
 export const auth = betterAuth({
   baseURL: env.BETTER_AUTH_URL,
-  trustedOrigins: [env.BETTER_AUTH_URL],
+  trustedOrigins: [`*.${env.BETTER_AUTH_URL}`],
   database: mongodbAdapter(db, {
     client: db.client,
   }),
@@ -86,7 +86,7 @@ export const auth = betterAuth({
   emailVerification: {
     sendOnSignUp: true,
     autoSignInAfterVerification: false,
-    sendVerificationEmail: async ({ user, url, token }) => {
+    sendVerificationEmail: async ({ user, token }) => {
       const verificationUrl = `${env.BETTER_AUTH_URL}/verify-email?token=${token}`;
 
       await resend.emails.send({
