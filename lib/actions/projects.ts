@@ -277,8 +277,8 @@ function transformProjectAdmin(doc: IProject): ProjectData {
 function revalidateProjects(slug?: string) {
   revalidatePath("/[locale]/(main)/projects", "page");
   if (slug) {
-    revalidatePath(`/en/projects/${slug}`, "page");
-    revalidatePath(`/pt/projects/${slug}`, "page");
+    revalidatePath(`/en/projects/${slug}`);
+    revalidatePath(`/pt/projects/${slug}`);
   }
 }
 
