@@ -21,7 +21,7 @@ const db = await getClient();
  */
 export const auth = betterAuth({
   baseURL: env.BETTER_AUTH_URL,
-  trustedOrigins: [`*.${env.BETTER_AUTH_URL}`],
+  trustedOrigins: [env.BETTER_AUTH_URL,"https://www.portospaceteam.pt"],
   database: mongodbAdapter(db, {
     client: db.client,
   }),
