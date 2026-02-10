@@ -29,7 +29,7 @@ const sponsorsPageContent = {
     }),
     commonSponsors: t({
       en: "Institutional Sponsors",
-      pt: "Patrocinadores Institucionais",
+      pt: "Parceiros Institucionais",
     }),
   },
 } satisfies Dictionary;
