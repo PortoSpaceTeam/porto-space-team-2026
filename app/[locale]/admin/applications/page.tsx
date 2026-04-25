@@ -71,7 +71,7 @@ const ApplicationsPage: NextPageIntlayer = async ({ params }) => {
         </div>
       </div>
 
-      <ApplicationsTable initialApplications={applications} />
+      <ApplicationsTable initialApplications={applications} locale={locale} />
     </div>
   );
 };

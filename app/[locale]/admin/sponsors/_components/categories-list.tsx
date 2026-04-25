@@ -317,9 +317,9 @@ export function CategoriesList({
               >
                 <CardHeader className="py-3">
                   <div className="flex items-center gap-3">
-                    <GripVertical className="size-4 text-muted-foreground" />
-                    <div className="flex-1">
-                      <CardTitle className="text-base flex items-center gap-2">
+                    <GripVertical className="size-4 text-muted-foreground shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <CardTitle className="text-base flex items-center gap-2 min-w-0">
                         <span
                           style={{
                             fontSize: category.titleStyle.fontSize,
@@ -379,7 +379,7 @@ export function CategoriesList({
       )}
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="sm:max-w-lg">
+        <DialogContent className="sm:max-w-lg max-h-[calc(100dvh-2rem)] overflow-y-auto overflow-x-hidden">
           <DialogHeader>
             <DialogTitle>
               {editingCategory

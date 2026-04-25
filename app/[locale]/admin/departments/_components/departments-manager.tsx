@@ -342,12 +342,12 @@ export function DepartmentsManager({
               >
                 <CardHeader className="py-3">
                   <div className="flex items-center gap-3">
-                    <GripVertical className="size-4 text-muted-foreground" />
-                    <div className="flex-1 flex items-center gap-4">
-                      <span className="font-mono text-xs text-primary bg-primary/10 px-2 py-1 rounded">
+                    <GripVertical className="size-4 text-muted-foreground shrink-0" />
+                    <div className="flex-1 min-w-0 flex items-center gap-4">
+                      <span className="font-mono text-xs text-primary bg-primary/10 px-2 py-1 rounded shrink-0">
                         {department.code}
                       </span>
-                      <span className="font-medium">{department.name}</span>
+                      <span className="font-medium truncate">{department.name}</span>
                       {department.skills && department.skills.length > 0 && (
                         <div className="hidden sm:flex gap-1">
                           {department.skills.slice(0, 3).map((skill, i) => (
@@ -397,7 +397,7 @@ export function DepartmentsManager({
       )}
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="sm:max-w-2xl max-h-[calc(100dvh-2rem)] overflow-y-auto overflow-x-hidden">
           <DialogHeader>
             <DialogTitle>
               {editingDepartment ? content.dialog.editTitle : content.dialog.addTitle}

@@ -32,9 +32,9 @@ const AdminLayout: NextLayoutIntlayer = async ({ children, params }) => {
     <IntlayerClientProvider locale={locale}>
       <SidebarProvider className="" defaultOpen={defaultOpen}>
         <AdminSidebar />
-        <SidebarInset>
+        <SidebarInset className="min-w-0 overflow-x-hidden">
           <AdminHeader />
-          <div className="flex flex-1 flex-col gap-4 p-4">{children}</div>
+          <div className="flex flex-1 flex-col gap-4 p-4 min-w-0">{children}</div>
         </SidebarInset>
       </SidebarProvider>
     </IntlayerClientProvider>

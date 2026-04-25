@@ -1598,7 +1598,7 @@ export function CompetitionsManager({ initialSections }: Props) {
       </Button>
 
       <Dialog open={isTypeDialogOpen} onOpenChange={setIsTypeDialogOpen}>
-        <DialogContent>
+        <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto overflow-x-hidden">
           <DialogHeader>
             <DialogTitle>{content.dialog.selectType}</DialogTitle>
           </DialogHeader>
@@ -1625,7 +1625,7 @@ export function CompetitionsManager({ initialSections }: Props) {
       </Dialog>
 
       <Dialog open={isBlockTypeDialogOpen} onOpenChange={setIsBlockTypeDialogOpen}>
-        <DialogContent>
+        <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto overflow-x-hidden">
           <DialogHeader>
             <DialogTitle>{content.dialog.selectBlockType}</DialogTitle>
           </DialogHeader>
@@ -1657,7 +1657,7 @@ export function CompetitionsManager({ initialSections }: Props) {
         open={selectedType !== null && !editingSection}
         onOpenChange={(open) => !open && resetForm()}
       >
-        <DialogContent className="max-w-3xl">
+        <DialogContent className="max-w-3xl max-h-[calc(100dvh-2rem)] overflow-y-auto overflow-x-hidden">
           <DialogHeader>
             <DialogTitle>
               {content.dialog.addTitle} - {selectedType && getSectionTypeLabel(selectedType)}
@@ -1691,7 +1691,7 @@ export function CompetitionsManager({ initialSections }: Props) {
           }
         }}
       >
-        <DialogContent className="max-w-3xl">
+        <DialogContent className="max-w-3xl max-h-[calc(100dvh-2rem)] overflow-y-auto overflow-x-hidden">
           <DialogHeader>
             <DialogTitle>
               {content.dialog.editTitle} - {editingSection && getSectionTypeLabel(editingSection.type)}

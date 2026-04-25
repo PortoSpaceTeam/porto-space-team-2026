@@ -1725,7 +1725,7 @@ export function ProjectCustomSectionManager({
       </Button>
 
       <Dialog open={isTypeDialogOpen} onOpenChange={setIsTypeDialogOpen}>
-        <DialogContent>
+        <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto overflow-x-hidden">
           <DialogHeader>
             <DialogTitle>{content.dialog.selectType}</DialogTitle>
           </DialogHeader>
@@ -1759,7 +1759,7 @@ export function ProjectCustomSectionManager({
         open={isBlockTypeDialogOpen}
         onOpenChange={setIsBlockTypeDialogOpen}
       >
-        <DialogContent>
+        <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto overflow-x-hidden">
           <DialogHeader>
             <DialogTitle>{content.dialog.selectBlockType}</DialogTitle>
           </DialogHeader>
@@ -1801,7 +1801,7 @@ export function ProjectCustomSectionManager({
         open={selectedType !== null && !editingSection}
         onOpenChange={(open) => !open && resetForm()}
       >
-        <DialogContent className="max-w-3xl">
+        <DialogContent className="max-w-3xl max-h-[calc(100dvh-2rem)] overflow-y-auto overflow-x-hidden">
           <DialogHeader>
             <DialogTitle>
               {content.dialog.addTitle} -{" "}
@@ -1836,7 +1836,7 @@ export function ProjectCustomSectionManager({
           }
         }}
       >
-        <DialogContent className="max-w-3xl">
+        <DialogContent className="max-w-3xl max-h-[calc(100dvh-2rem)] overflow-y-auto overflow-x-hidden">
           <DialogHeader>
             <DialogTitle>
               {content.dialog.editTitle} -{" "}

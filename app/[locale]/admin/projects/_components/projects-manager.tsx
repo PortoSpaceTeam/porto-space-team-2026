@@ -528,7 +528,7 @@ export function ProjectsManager({ initialProjects }: Props) {
             {content.addButton}
           </Button>
         </DialogTrigger>
-        <DialogContent className="max-w-lg">
+        <DialogContent className="max-w-lg max-h-[calc(100dvh-2rem)] overflow-y-auto overflow-x-hidden">
           <DialogHeader>
             <DialogTitle>{content.dialog.addTitle}</DialogTitle>
           </DialogHeader>
@@ -561,7 +561,7 @@ export function ProjectsManager({ initialProjects }: Props) {
         open={!!editingProject}
         onOpenChange={(open: boolean) => !open && setEditingProject(null)}
       >
-        <DialogContent className="max-w-lg">
+        <DialogContent className="max-w-lg max-h-[calc(100dvh-2rem)] overflow-y-auto overflow-x-hidden">
           <DialogHeader>
             <DialogTitle>{content.dialog.editTitle}</DialogTitle>
           </DialogHeader>

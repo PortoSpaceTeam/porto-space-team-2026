@@ -109,6 +109,24 @@ function getEmailSubject(
   return subjects[status];
 }
 
+export async function getApplicationByApplicationId(
+  applicationId: string,
+): Promise<ActionResult<ApplicationData>> {
+  const session = await getAdminSession();
+  if (!session) {
+    return { success: false, error: "Unauthorized" };
+  }
+
+  await connectDB();
+  const application = await Applications.findOne({ applicationId });
+
+  if (!application) {
+    return { success: false, error: "Application not found" };
+  }
+
+  return { success: true, data: mapApplicationToData(application) };
+}
+
 export async function getApplications(): Promise<
   ActionResult<ApplicationData[]>
 > {

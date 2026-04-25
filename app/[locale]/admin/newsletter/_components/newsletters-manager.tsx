@@ -424,7 +424,7 @@ export function NewslettersManager({
       </div>
 
       <Dialog open={sendDialogOpen} onOpenChange={setSendDialogOpen}>
-        <DialogContent className="sm:max-w-lg">
+        <DialogContent className="sm:max-w-lg max-h-[calc(100dvh-2rem)] overflow-y-auto overflow-x-hidden">
           <DialogHeader>
             <DialogTitle>{content.newsletters.sendDialog.title}</DialogTitle>
             <DialogDescription>

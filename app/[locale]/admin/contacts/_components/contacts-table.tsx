@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useIntlayer } from "next-intlayer";
 import {
   Table,
@@ -20,20 +21,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
   MoreHorizontal,
   Eye,
   CheckCircle,
   MessageCircle,
   Archive,
   Copy,
-  Mail,
 } from "lucide-react";
 import { toast } from "sonner";
 import { apiClient } from "@/lib/api-client";
@@ -42,16 +35,15 @@ import type { ContactStatus, ContactSubject } from "@/models/Contact";
 
 interface ContactsTableProps {
   initialContacts: ContactData[];
+  locale: string;
 }
 
-
-export function ContactsTable({ initialContacts }: ContactsTableProps) {
+export function ContactsTable({
+  initialContacts,
+  locale,
+}: ContactsTableProps) {
   const content = useIntlayer("admin-contacts-page");
   const [contacts, setContacts] = useState(initialContacts);
-  const [selectedContact, setSelectedContact] = useState<ContactData | null>(
-    null
-  );
-  const [dialogOpen, setDialogOpen] = useState(false);
 
   const updateStatus = async (id: string, status: ContactStatus) => {
     const contactsApi = apiClient<UpdateContactRoute>("/api/contacts");
@@ -61,19 +53,11 @@ export function ContactsTable({ initialContacts }: ContactsTableProps) {
 
     if (result.success) {
       setContacts((prev) =>
-        prev.map((c) => (c.id === id ? { ...c, status } : c))
+        prev.map((c) => (c.id === id ? { ...c, status } : c)),
       );
       toast.success("Status updated");
     } else {
       toast.error("Failed to update status");
-    }
-  };
-
-  const viewContact = (contact: ContactData) => {
-    setSelectedContact(contact);
-    setDialogOpen(true);
-    if (contact.status === "new") {
-      updateStatus(contact.id, "read");
     }
   };
 
@@ -82,23 +66,19 @@ export function ContactsTable({ initialContacts }: ContactsTableProps) {
     toast.success("Email copied to clipboard");
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString(undefined, {
+  const formatDate = (dateString: string) =>
+    new Date(dateString).toLocaleDateString(undefined, {
       year: "numeric",
       month: "short",
       day: "numeric",
       hour: "2-digit",
       minute: "2-digit",
     });
-  };
 
-  const getSubjectLabel = (subject: ContactSubject) => {
-    return content.subjects[subject];
-  };
+  const getSubjectLabel = (subject: ContactSubject) =>
+    content.subjects[subject];
 
-  const getStatusLabel = (status: ContactStatus) => {
-    return content.statuses[status];
-  };
+  const getStatusLabel = (status: ContactStatus) => content.statuses[status];
 
   if (contacts.length === 0) {
     return (
@@ -109,163 +89,95 @@ export function ContactsTable({ initialContacts }: ContactsTableProps) {
   }
 
   return (
-    <>
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>{content.table.ticketId}</TableHead>
-              <TableHead>{content.table.name}</TableHead>
-              <TableHead>{content.table.email}</TableHead>
-              <TableHead>{content.table.subject}</TableHead>
-              <TableHead>{content.table.status}</TableHead>
-              <TableHead>{content.table.date}</TableHead>
-              <TableHead className="w-17.5">{content.table.actions}</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {contacts.map((contact) => (
-              <TableRow
-                key={contact.id}
-              >
-                <TableCell className="font-mono text-sm">
+    <div className="rounded-md border">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>{content.table.ticketId}</TableHead>
+            <TableHead>{content.table.name}</TableHead>
+            <TableHead>{content.table.email}</TableHead>
+            <TableHead>{content.table.subject}</TableHead>
+            <TableHead>{content.table.status}</TableHead>
+            <TableHead>{content.table.date}</TableHead>
+            <TableHead className="w-17.5">{content.table.actions}</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {contacts.map((contact) => (
+            <TableRow key={contact.id}>
+              <TableCell className="font-mono text-sm">
+                <Link
+                  href={`/${locale}/admin/contacts/${contact.ticketId}`}
+                  className="hover:underline"
+                >
                   {contact.ticketId}
-                </TableCell>
-                <TableCell className="font-medium">{contact.name}</TableCell>
-                <TableCell className="text-muted-foreground">
-                  {contact.email}
-                </TableCell>
-                <TableCell>
-                  <Badge variant="outline">
-                    {getSubjectLabel(contact.subject)}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <Badge
-                    variant="outline"
-                  >
-                    {getStatusLabel(contact.status)}
-                  </Badge>
-                </TableCell>
-                <TableCell className="text-muted-foreground text-sm">
-                  {formatDate(contact.createdAt)}
-                </TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <MoreHorizontal className="size-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => viewContact(contact)}>
+                </Link>
+              </TableCell>
+              <TableCell className="font-medium">{contact.name}</TableCell>
+              <TableCell className="text-muted-foreground">
+                {contact.email}
+              </TableCell>
+              <TableCell>
+                <Badge variant="outline">
+                  {getSubjectLabel(contact.subject)}
+                </Badge>
+              </TableCell>
+              <TableCell>
+                <Badge variant="outline">{getStatusLabel(contact.status)}</Badge>
+              </TableCell>
+              <TableCell className="text-muted-foreground text-sm">
+                {formatDate(contact.createdAt)}
+              </TableCell>
+              <TableCell>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                      <MoreHorizontal className="size-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem asChild>
+                      <Link href={`/${locale}/admin/contacts/${contact.ticketId}`}>
                         <Eye className="size-4" />
                         {content.actions.view}
-                      </DropdownMenuItem>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => copyEmail(contact.email)}>
+                      <Copy className="size-4" />
+                      {content.actions.copyEmail}
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    {contact.status !== "read" && (
                       <DropdownMenuItem
-                        onClick={() => copyEmail(contact.email)}
+                        onClick={() => updateStatus(contact.id, "read")}
                       >
-                        <Copy className="size-4" />
-                        {content.actions.copyEmail}
+                        <CheckCircle className="size-4" />
+                        {content.actions.markAsRead}
                       </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      {contact.status !== "read" && (
-                        <DropdownMenuItem
-                          onClick={() => updateStatus(contact.id, "read")}
-                        >
-                          <CheckCircle className="size-4" />
-                          {content.actions.markAsRead}
-                        </DropdownMenuItem>
-                      )}
-                      {contact.status !== "replied" && (
-                        <DropdownMenuItem
-                          onClick={() => updateStatus(contact.id, "replied")}
-                        >
-                          <MessageCircle className="size-4" />
-                          {content.actions.markAsReplied}
-                        </DropdownMenuItem>
-                      )}
-                      {contact.status !== "archived" && (
-                        <DropdownMenuItem
-                          onClick={() => updateStatus(contact.id, "archived")}
-                        >
-                          <Archive className="size-4" />
-                          {content.actions.archive}
-                        </DropdownMenuItem>
-                      )}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              {content.dialog.title}
-              {selectedContact && (
-                <span className="font-mono text-sm text-muted-foreground">
-                  {selectedContact.ticketId}
-                </span>
-              )}
-            </DialogTitle>
-            <DialogDescription>
-              {selectedContact && formatDate(selectedContact.createdAt)}
-            </DialogDescription>
-          </DialogHeader>
-          {selectedContact && (
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
-                    {content.dialog.from}
-                  </p>
-                  <p className="text-sm">
-                    {selectedContact.name} &lt;{selectedContact.email}&gt;
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
-                    {content.dialog.subject}
-                  </p>
-                  <p className="text-sm">
-                    {getSubjectLabel(selectedContact.subject)}
-                  </p>
-                </div>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-muted-foreground mb-2">
-                  {content.dialog.message}
-                </p>
-                <div className="bg-muted/50 rounded-md p-4 text-sm whitespace-pre-wrap">
-                  {selectedContact.message}
-                </div>
-              </div>
-              <div className="flex justify-end gap-2 pt-4">
-                <Button
-                  variant="outline"
-                  onClick={() => setDialogOpen(false)}
-                >
-                  {content.dialog.close}
-                </Button>
-                <Button
-                  onClick={() => {
-                    window.location.href = `mailto:${selectedContact.email}?subject=Re: [${selectedContact.ticketId}]`;
-                    updateStatus(selectedContact.id, "replied");
-                  }}
-                >
-                  <Mail className="size-4" />
-                  {content.dialog.reply}
-                </Button>
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
-    </>
+                    )}
+                    {contact.status !== "replied" && (
+                      <DropdownMenuItem
+                        onClick={() => updateStatus(contact.id, "replied")}
+                      >
+                        <MessageCircle className="size-4" />
+                        {content.actions.markAsReplied}
+                      </DropdownMenuItem>
+                    )}
+                    {contact.status !== "archived" && (
+                      <DropdownMenuItem
+                        onClick={() => updateStatus(contact.id, "archived")}
+                      >
+                        <Archive className="size-4" />
+                        {content.actions.archive}
+                      </DropdownMenuItem>
+                    )}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }

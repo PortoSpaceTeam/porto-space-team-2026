@@ -45,7 +45,7 @@ const ContactsPage: NextPageIntlayer = async ({ params }) => {
         </div>
       </div>
 
-      <ContactsTable initialContacts={contacts} />
+      <ContactsTable initialContacts={contacts} locale={locale} />
     </div>
   );
 };

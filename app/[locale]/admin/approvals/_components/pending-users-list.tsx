@@ -116,9 +116,9 @@ export function PendingUsersList({ initialUsers }: PendingUsersListProps) {
                   <AvatarImage src={user.image ?? undefined} />
                   <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
                 </Avatar>
-                <div className="flex-1 space-y-1">
-                  <h3 className="font-semibold leading-none">{user.name}</h3>
-                  <p className="text-sm text-muted-foreground">{user.email}</p>
+                <div className="flex-1 min-w-0 space-y-1">
+                  <h3 className="font-semibold leading-none truncate">{user.name}</h3>
+                  <p className="text-sm text-muted-foreground truncate">{user.email}</p>
                 </div>
               </div>
 
