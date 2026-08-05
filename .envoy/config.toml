@@ -1,11 +1,11 @@
 
 version = 1
-project_id = "725595b9-c26d-4b10-a0b8-59b74832a092"
+project_id = "9689213b-4a39-4b46-af8b-19a0ad1503d6"
 name = "porto-space-team-2026"
 
 default_remote = "origin"
 
 [remotes]
-origin = "https://envoy-cli.vercel.app/api"
+origin = "https://envoy.denizlg24.com/api"
 
 
