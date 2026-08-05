@@ -4,7 +4,7 @@
 
 Before you begin, ensure you have the following installed:
 
-- **Envoy**: Secret management tool ([Installation Guide](https://github.com/denizlg24/envoy))
+- **Envoy**: Secret management tool ([Installation Guide](https://github.com/denizlg24/denizlg24.com/tree/main/apps/envoy))
 
 ## Secret Management
 
